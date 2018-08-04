@@ -120,13 +120,21 @@ public class Controller {
     public void gotoMine(int workerID, int mineID){
 
         moves.add(new Move(workerID, mineID));
-        getPlaceById(mineID).res--;
+        Worker worker = getWorkerById(workerID);
+        MineFactory mine = getPlaceById(mineID);
+        worker.x = mine.x_coord;
+        worker.y = mine.y_coord;
+        mine.res--;
 
     }
 
     public void gotoFactory(int workerID, int factoryID){
 
         moves.add(new Move(workerID, factoryID));
+        Worker worker = getWorkerById(workerID);
+        MineFactory factory = getPlaceById(factoryID);
+        worker.x = factory.x_coord;
+        worker.y = factory.y_coord;
 
     }
 
