@@ -130,4 +130,53 @@ public class Controller {
 
     }
 
+    private Move[] getMovesByWorker(int workerID){
+
+        int matches = 0;
+
+        for (Move move : moves)
+            if (move.workerID == workerID)
+                matches++;
+
+        Move[] matchedMoves = new Move[matches];
+
+        int j = 0;
+        for (Move move : moves) {
+            if (move.workerID == workerID) {
+                matchedMoves[j] = move;
+                j++;
+            }
+        }
+
+        return matchedMoves;
+
+    }
+
+    public void printSolution(){
+
+        for (int capOut = 1; capOut <=5; capOut += 2) {
+
+            for (Worker worker : getWorkersByCapacity(capOut)) {
+                String line = capToStr(capOut) + "|";
+                for (Move move : getMovesByWorker(worker.uni_id))
+                    line += move.destinationID + ",";
+                line = line.substring(line.length() - 2); //get rid of last comma
+                System.out.println(line);
+            }
+
+        }
+
+    }
+
+    private String capToStr(int cap){
+        switch (cap){
+            case 1:
+                return "M";
+            case 3:
+                return "E";
+            case 5:
+                return "H";
+        }
+    }
+
 }
