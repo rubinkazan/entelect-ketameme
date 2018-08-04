@@ -24,7 +24,7 @@ public class Controller {
     public Controller(Scanner scanner){
 
         in = scanner;
-        moves = new ArrayList<Move>;
+        moves = new ArrayList<Move>();
 
     }
 
@@ -70,7 +70,7 @@ public class Controller {
             String resourceTag = in.next();
             int x = in.nextInt();
             int y = in.nextInt();
-            factories[i] = new MineFactory(index, resourceTag, x, y);
+            factories[i] = new MineFactory(index, resourceTag, x, y, -1);
 
         }
 
@@ -97,30 +97,27 @@ public class Controller {
     public Worker getWorkerById(int workerID){
 
         for (Worker worker : workers)
-            if (worker.id == workerID)
+            if (worker.uni_id == workerID)
                 return worker;
 
-    }
-
-    public Factory getFactoryById(int factoryID){
-
-        for (Factory factory : factories)
-            if (factory.id == factoryID)
-                return factory;
+        return null;
 
     }
 
-    public Mine getMineById(int mineID){
+    public MineFactory getPlaceById(int mineID){
 
-        for (Mine mine : mines)
-            if (mine.id == mineID)
+        for (MineFactory mine : mines)
+            if (mine.mineID == mineID)
                 return mine;
+
+        return null;
 
     }
 
     public void gotoMine(int workerID, int mineID){
 
         moves.add(new Move(workerID, mineID));
+        getPlaceById(mineID).res--;
 
     }
 
