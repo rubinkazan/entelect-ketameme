@@ -107,11 +107,15 @@ public class Controller {
 
     }
 
-    public MineFactory getPlaceById(int mineID){
+    public MineFactory getPlaceById(int id){
 
         for (MineFactory mine : mines)
-            if (mine.id == mineID)
+            if (mine.id == id)
                 return mine;
+
+        for (MineFactory factory : factories)
+            if (factory.id == id)
+                return factory;
 
         return null;
 
@@ -231,6 +235,23 @@ public class Controller {
             }
 
         return matches;
+
+    }
+
+    public MineFactory[] getNonEmptyMines(){
+
+        int nonEmpties = 0;
+        for (MineFactory mine : mines)
+            if (mine.res > 0) nonEmpties++;
+
+        MineFactory[] nonEmptyMines = new MineFactory[nonEmpties];
+        int j = 0;
+        for (MineFactory mine : mines) {
+            if (mine.res > 0)
+                nonEmptyMines[j++] = mine;
+        }
+
+        return nonEmptyMines;
 
     }
 
