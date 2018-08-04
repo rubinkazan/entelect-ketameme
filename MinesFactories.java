@@ -4,12 +4,16 @@ int mineID = 0;
 int factID = 0;
 int x_coord = 0;
 int y_coord = 0;
+	int res = -1;
+String recTag = "";
 
-public MinesFactories(int m, int f, int x, int y){
-	y = y_coord;
-	x = x_coord;
-	m = mineID;
-	f = factID;
+public MinesFactories(int m, String resourceTag,int x, int y, int resources){
+	y_coord = y;
+	x_coord = x;
+	mineID = m;
+	recTag = resourceTag;
+	res = resources;
+	  
 }
 
 public int getMineID(int mineID()){
