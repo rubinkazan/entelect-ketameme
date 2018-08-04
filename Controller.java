@@ -13,6 +13,7 @@ public class Controller {
     public Worker[] workers;
     private List<Move> moves;
     public MineFactory[] mines;
+    private int[] minesInit;
     public MineFactory[] factories;
     public int budget;
 
@@ -22,6 +23,15 @@ public class Controller {
             this.workerID = workerID;
             this.destinationID = destinationID;
         }
+    }
+
+    public void reset(){
+        moves.clear();
+        for (Worker w : workers){
+            w.x = 0; w.y = 0;
+        }
+        for (int i = 0; i < minesInit.length; i++)
+            mines[i].resCount = minesInit[i];
     }
 
     public Controller(Scanner scanner){
@@ -53,7 +63,9 @@ public class Controller {
             workerID++;
         }
 
-        mines = new MineFactory[in.nextInt()];
+        int minesCount = in.nextInt();
+        mines = new MineFactory[minesCount];
+        minesInit = new int[minesCount];
         factories = new MineFactory[in.nextInt()];
         budget = in.nextInt();
         in.nextLine();
@@ -65,6 +77,7 @@ public class Controller {
             int y = in.nextInt();
             int resources = in.nextInt();
             mines[i] = new MineFactory(index, resourceTag, x, y, resources);
+            minesInit[i] = resources;
 
         }
 
@@ -193,6 +206,25 @@ public class Controller {
         }
 
         writer.close();
+
+    }
+
+    public long calculateScore(){
+
+        long dist = 0;
+        for (Worker worker : workers){
+
+            worker.x = 0; worker.y = 0;
+
+            for (Move move : getMovesByWorker(worker.uni_id)){
+                MineFactory dest = getPlaceById(move.destinationID);
+                dist += calcDistance(worker.x, worker.y, dest.x_coord, dest.y_coord);
+                worker.x = dest.x_coord; worker.y = dest.y_coord;
+            }
+
+        }
+
+        return budget-dist;
 
     }
 
