@@ -1,11 +1,11 @@
-public class Workers{
+public class Worker{
 private static final int min_cap = 1;
 private static final int exc_cap = 3;
 private static final int hau_cap = 5;
 public int uni_id = 0;
 public int workerNum
 
-public Workers(int workerNum,int uni_id,int workerType){
+public Worker(int workerNum,int uni_id,int workerType){
 	this.workerNum = workerNum;
 	this.uni_id = uni_id;
 }
