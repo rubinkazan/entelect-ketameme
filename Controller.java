@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -149,7 +152,9 @@ public class Controller {
 
     }
 
-    public void printSolution(){
+    public void printSolution(String fileName) throws IOException {
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
 
         for (int capOut = 1; capOut <=5; capOut += 2) {
 
@@ -158,6 +163,7 @@ public class Controller {
                 Move[] movesForWorker = getMovesByWorker(worker.uni_id);
                 if (movesForWorker.length == 0) {
                     System.out.println(line);
+                    writer.write(line+"\n");
                     continue;
                 }
 
@@ -165,10 +171,23 @@ public class Controller {
                     line += move.destinationID + ",";
                 line = line.substring(0, line.length() - 1); //get rid of last comma
                 System.out.println(line);
+                writer.write(line+"\n");
             }
 
         }
 
+        writer.close();
+
+    }
+
+    public boolean checkIfDone(){
+
+        for (MineFactory mine : mines) {
+            if (mine.res > 0)
+                return false;
+        }
+
+        return true;
     }
 
     public int calcDistance(int x1, int y1, int x2, int y2){
