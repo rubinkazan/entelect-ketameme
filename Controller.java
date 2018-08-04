@@ -107,7 +107,7 @@ public class Controller {
     public MineFactory getPlaceById(int mineID){
 
         for (MineFactory mine : mines)
-            if (mine.mineID == mineID)
+            if (mine.id == mineID)
                 return mine;
 
         return null;
@@ -155,9 +155,15 @@ public class Controller {
 
             for (Worker worker : getWorkersByCapacity(capOut)) {
                 String line = capToStr(capOut) + "|";
-                for (Move move : getMovesByWorker(worker.uni_id))
+                Move[] movesForWorker = getMovesByWorker(worker.uni_id);
+                if (movesForWorker.length == 0) {
+                    System.out.println(line);
+                    continue;
+                }
+
+                for (Move move : movesForWorker)
                     line += move.destinationID + ",";
-                line = line.substring(line.length() - 2); //get rid of last comma
+                line = line.substring(0, line.length() - 1); //get rid of last comma
                 System.out.println(line);
             }
 
@@ -180,6 +186,25 @@ public class Controller {
             case 5:
                 return "H";
         }
+        return null;
+    }
+
+    public MineFactory[] getFactoriesByResTag(String tag){
+
+        int tagMatches = 0;
+        for (MineFactory factory : factories)
+            if (factory.recTag.equalsIgnoreCase(tag)) tagMatches++;
+
+        MineFactory[] matches = new MineFactory[tagMatches];
+        int j = 0;
+        for (MineFactory factory : factories)
+            if (factory.recTag.equalsIgnoreCase(tag)){
+                matches[j] = factory;
+                j++;
+            }
+
+        return matches;
+
     }
 
 }

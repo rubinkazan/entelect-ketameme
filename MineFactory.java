@@ -1,6 +1,6 @@
 public class MineFactory{
 
-    int mineID = 0;
+    int id = 0;
     int x_coord = 0;
     int y_coord = 0;
     int res = -1;
@@ -9,7 +9,7 @@ public class MineFactory{
     public MineFactory(int m, String resourceTag,int x, int y, int resources){
         y_coord = y;
         x_coord = x;
-        mineID = m;
+        id = m;
         recTag = resourceTag;
         res = resources;
 
