@@ -128,7 +128,9 @@ public class Controller {
         MineFactory mine = getPlaceById(mineID);
         worker.x = mine.x_coord;
         worker.y = mine.y_coord;
+
         mine.res--;
+        worker.items.add(mine.recTag);
 
     }
 
@@ -139,6 +141,8 @@ public class Controller {
         MineFactory factory = getPlaceById(factoryID);
         worker.x = factory.x_coord;
         worker.y = factory.y_coord;
+
+        worker.items.remove(factory.recTag);
 
     }
 

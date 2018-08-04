@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Worker{
     private static final int min_cap = 1;
     private static final int exc_cap = 3;
@@ -6,11 +9,13 @@ public class Worker{
     public int capacity;
     int x;
     int y;
+    List<String> items;
 
     public Worker(int uni_id, int cap){
         this.capacity = cap;
         this.uni_id = uni_id;
         x=0;y=0;
+        items = new ArrayList<>(cap);
     }
 
 }
