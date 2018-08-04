@@ -129,8 +129,8 @@ public class Controller {
         worker.x = mine.x_coord;
         worker.y = mine.y_coord;
 
-        mine.res--;
-        worker.items.add(mine.recTag);
+        mine.resCount--;
+        worker.items.add(mine.resTag);
 
     }
 
@@ -142,7 +142,7 @@ public class Controller {
         worker.x = factory.x_coord;
         worker.y = factory.y_coord;
 
-        worker.items.remove(factory.recTag);
+        worker.items.remove(factory.resTag);
 
     }
 
@@ -199,7 +199,11 @@ public class Controller {
     public boolean checkIfDone(){
 
         for (MineFactory mine : mines) {
-            if (mine.res > 0)
+            if (mine.resCount > 0)
+                return false;
+        }
+        for (Worker worker : workers){
+            if (worker.items.size() > 0)
                 return false;
         }
 
@@ -224,16 +228,34 @@ public class Controller {
         return null;
     }
 
-    public MineFactory[] getFactoriesByResTag(String tag){
+    public MineFactory[] getFactoriesByResTags(List<String> tags){
 
         int tagMatches = 0;
         for (MineFactory factory : factories)
-            if (factory.recTag.equalsIgnoreCase(tag)) tagMatches++;
+            if (tags.contains(factory.resTag)) tagMatches++;
 
         MineFactory[] matches = new MineFactory[tagMatches];
         int j = 0;
         for (MineFactory factory : factories)
-            if (factory.recTag.equalsIgnoreCase(tag)){
+            if (tags.contains(factory.resTag)){
+                matches[j] = factory;
+                j++;
+            }
+
+        return matches;
+
+    }
+
+    public MineFactory[] getFactoriesByResTag(String tag){
+
+        int tagMatches = 0;
+        for (MineFactory factory : factories)
+            if (factory.resTag.equalsIgnoreCase(tag)) tagMatches++;
+
+        MineFactory[] matches = new MineFactory[tagMatches];
+        int j = 0;
+        for (MineFactory factory : factories)
+            if (factory.resTag.equalsIgnoreCase(tag)){
                 matches[j] = factory;
                 j++;
             }
@@ -246,12 +268,12 @@ public class Controller {
 
         int nonEmpties = 0;
         for (MineFactory mine : mines)
-            if (mine.res > 0) nonEmpties++;
+            if (mine.resCount > 0) nonEmpties++;
 
         MineFactory[] nonEmptyMines = new MineFactory[nonEmpties];
         int j = 0;
         for (MineFactory mine : mines) {
-            if (mine.res > 0)
+            if (mine.resCount > 0)
                 nonEmptyMines[j++] = mine;
         }
 
