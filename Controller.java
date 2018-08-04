@@ -9,8 +9,8 @@ public class Controller {
     public int mapHeight;
     public Worker[] workers;
     private List<Move> moves;
-    public Mine[] mines;
-    public Factory[] factories;
+    public MineFactory[] mines;
+    public MineFactory[] factories;
     public int budget;
 
     private class Move{
@@ -50,8 +50,8 @@ public class Controller {
             workerID++;
         }
 
-        mines = new Mine[in.nextInt()];
-        factories = new Factory[in.nextInt()];
+        mines = new MineFactory[in.nextInt()];
+        factories = new MineFactory[in.nextInt()];
         budget = in.nextInt();
         in.nextLine();
 
@@ -61,7 +61,7 @@ public class Controller {
             int x = in.nextInt();
             int y = in.nextInt();
             int resources = in.nextInt();
-            mines[i] = new Mine(index, resourceTag, x, y, resources);
+            mines[i] = new MineFactory(index, resourceTag, x, y, resources);
 
         }
 
@@ -70,7 +70,7 @@ public class Controller {
             String resourceTag = in.next();
             int x = in.nextInt();
             int y = in.nextInt();
-            factories[i] = new Factory(index, resourceTag, x, y);
+            factories[i] = new MineFactory(index, resourceTag, x, y);
 
         }
 
@@ -165,6 +165,12 @@ public class Controller {
             }
 
         }
+
+    }
+
+    public int calcDistance(int x1, int y1, int x2, int y2){
+
+        return Math.abs(x1-x2) + Math.abs(y1-y2);
 
     }
 
